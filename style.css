@@ -1,0 +1,352 @@
+body {
+      font-family: sans-serif;
+      text-align: center;
+    }
+
+    #carousel {
+      position: relative;
+      width: 800px;
+      margin: 30px auto;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #f8f8f8;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+    }
+
+    #slides-container {
+  position: relative;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  height: 480px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.slide.active {
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 450px;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  transition: transform 0.4s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+}
+
+.slide.active img:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.18);
+}
+
+/* Кнопки prev/next по бокам */
+#prev-btn, #next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border: none;
+  border-radius: 50%;
+  font-size: 28px;
+  color: #333;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 
+    background 0.3s,
+    box-shadow 0.3s,
+    color 0.3s,
+    transform 0.2s;
+  outline: none;
+}
+
+#prev-btn {
+  left: 32px; /* увеличенный отступ от левого края */
+}
+
+#next-btn {
+  right: 32px; /* увеличенный отступ от правого края */
+}
+
+#prev-btn:hover, #next-btn:hover {
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  color: #1976d2;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.28), 0 2px 12px rgba(0,0,0,0.12);
+  #prev-btn:hover, #next-btn:hover, #pause-btn:hover {
+    background: rgba(25, 118, 210, 0.13);
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(25, 118, 210, 0.28), 0 2px 12px rgba(0,0,0,0.12);
+    transform: scale(1.15);
+  }  transform: translateY(-50%) scale(1.15);
+}
+
+#pause-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(25, 118, 210, 0.18);
+  box-shadow: 0 4px 24px rgba(25, 118, 210, 0.18), 0 1.5px 8px rgba(0,0,0,0.08);
+  color: #1976d2;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  font-size: 32px;
+  margin: 0 auto 18px auto;
+  cursor: pointer;
+  transition:     background 0.3s,    box-shadow 0.3s,    color 0.3s,    transform 0.2s;
+  position: relative;
+  z-index: 2;
+  -webkit-transition:     background 0.3s,    box-shadow 0.3s,    color 0.3s,    transform 0.2s;
+  -moz-transition:     background 0.3s,    box-shadow 0.3s,    color 0.3s,    transform 0.2s;
+  -ms-transition:     background 0.3s,    box-shadow 0.3s,    color 0.3s,    transform 0.2s;
+  -o-transition:     background 0.3s,    box-shadow 0.3s,    color 0.3s,    transform 0.2s;
+}
+
+#pause-btn:hover {
+  background: linear-gradient(135deg, #e3f0fd 0%, #bbdefb 100%);
+  color: #1976d2;
+  box-shadow:
+    0 0 0 6px rgba(25, 118, 210, 0.10),
+    0 8px 32px rgba(25, 118, 210, 0.28),
+    0 2px 12px rgba(0,0,0,0.12);
+  filter: drop-shadow(0 0 12px #90caf9);
+  transform: scale(1.13);
+  transition: 
+    background 0.3s,
+    box-shadow 0.3s,
+    color 0.3s,
+    filter 0.3s,
+    transform 0.2s;
+}
+
+#pause-btn:hover #fa-play-icon,
+#pause-btn:hover #fa-pause-icon {
+  color: #1976d2;
+  filter: drop-shadow(0 0 6px #90caf9);
+  transition: color 0.3s, filter 0.3s;
+}
+
+#fa-play-icon, #fa-pause-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  font-size: 36px;
+  pointer-events: none;
+}
+
+#pause-btn i {
+  font-size: 36px;
+  pointer-events: none;
+}
+
+#prev-btn::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f053";
+  font-weight: 900;
+  font-size: 28px;
+  pointer-events: none;
+}
+
+#next-btn::after {
+  font-family: "Font Awesome 5 Free";
+  content: "\f054";
+  font-weight: 900;
+  font-size: 28px;
+  pointer-events: none;
+}
+
+/* Контейнер для pause-btn и индикаторов */
+#controls-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  margin-bottom: 18px;
+  z-index: 1;
+}
+
+/* prev/next по бокам, pause по центру */
+#prev-btn, #next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#prev-btn {
+  left: 32px; /* увеличенный отступ от левого края */
+}
+
+#next-btn {
+  right: 32px; /* увеличенный отступ от правого края */
+}
+
+#pause-btn {
+  position: relative;
+  margin: 0 auto;
+  z-index: 2;
+  /* остальные стили кнопки play/pause */
+}
+
+#indicators-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 32px 0 24px 0;
+  gap: 36px;
+}
+
+.indicator {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e3f0fd 0%, #b6d0f7 100%);
+  border: 3px solid #1976d2;
+  box-shadow: 0 4px 24px rgba(25, 118, 210, 0.13), 0 2px 12px rgba(0,0,0,0.10);
+  cursor: pointer;
+  transition: 
+    background 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s,
+    transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.indicator.active {
+  background: linear-gradient(135deg, #1976d2 0%, #64b5f6 100%);
+  border-color: #1565c0;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.22);
+  transform: scale(1.18);
+}
+
+.indicator:hover {
+  background: linear-gradient(135deg, #64b5f6 0%, #bbdefb 100%);
+  border-color: #1976d2;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.22);
+  transform: scale(1.09);
+}
+
+/* Убираем цифры внутри индикаторов */
+.indicator::after,
+.indicator span {
+  display: none !important;
+}
+
+/* --- СТРЕЛКИ ПО БОКАМ КРУГОВ --- */
+.indicator.prev::before,
+.indicator.next::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 28px;
+  color: #1976d2;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.indicator.prev::before {
+  content: "\f053"; /* FontAwesome left arrow */
+  left: 14px;
+}
+
+.indicator.next::before {
+  content: "\f054"; /* FontAwesome right arrow */
+  right: 14px;
+}
+
+/* --- PLAY ПО ЦЕНТРУ КРУГА --- */
+.indicator.play::before {
+  content: "\f04b"; /* FontAwesome play icon */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 32px;
+  color: #1976d2;
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Для активного play — белый значок */
+.indicator.play.active::before {
+  color: #fff;
+}
+
+/* --- КРАСИВЫЕ СТЕКЛЯННЫЕ КНОПКИ --- */
+#prev-btn, #next-btn, #pause-btn {
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.35);
+  border: 2px solid rgba(25, 118, 210, 0.18);
+  box-shadow: 0 4px 24px rgba(25, 118, 210, 0.18), 0 1.5px 8px rgba(0,0,0,0.08);
+  color: #1976d2;
+  transition: 
+    background 0.3s,
+    box-shadow 0.3s,
+    color 0.3s,
+    transform 0.2s;
+}
+
+
+
+#prev-btn::before, #next-btn::before {
+  color: inherit;
+  text-shadow: 0 2px 8px rgba(25, 118, 210, 0.18);
+}
+
+/* --- Центрирование стрелок по вертикали --- */
+#prev-btn, #next-btn {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.indicator-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #1976d2;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  background: #fff;
+  pointer-events: none;
+}
+
+.indicator.active .indicator-thumb {
+  border-color: #1565c0;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.18);
+  transform: scale(1.12);
+}
+
+
+
+
